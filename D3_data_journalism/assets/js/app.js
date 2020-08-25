@@ -28,3 +28,8 @@ var svg = d3
 var chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
+// Initial Parameters
+var chosenXAxis = "poverty";
+var chosenYAxis = "obesity";
+
+// The function used for updating x-scale var upon click on axis label
