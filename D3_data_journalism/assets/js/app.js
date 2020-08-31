@@ -129,6 +129,15 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, textGroup) {
         .on("mouseout", function(data) {
             toolTip.hide(data);
         });
+    
+    textGroup.call(toolTip);
+    
+    textGroup.on("mouseover", function(data) {
+        toolTip.show(data, this);
+    })
+        .on("mouseout", function(data){
+            toolTip.hide(data);
+        });
 
     return circlesGroup;
 }
@@ -156,5 +165,42 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
     // Create axis functions for the chart
     var bottomAxis = d3.axisBottom(xLinearScale);
     var leftAxis = d3.axisLeft(yLinearScale);
+
+    // Append X-Axis to the chart
+    var xAxis = chartGroup.append("g")
+        .classed("x-axis", true)
+        .attr("transform", `translate(0, ${height})`)
+        .call(bottomAxis);
+    
+    // Append y-axis
+    var yAxis = chartGroup.append("g")
+        .classed("y-axis", true)
+        .call(leftAxis);
+    
+    // Append initial circles
+    var circlesGroup = chartGroup.selectAll("circle")
+        .data(data)
+        .enter()
+        .append("circle")
+        .attr("cx", d => xLinearScale(d[chosenXAxis]))
+        .attr("cy", d => yLinearScale(d[chosenYAxis]))
+        .attr("fill", "blue")
+        .attr("stroke-width", "1")
+        .attr("stroke", "white")
+        .attr("opacity", ".5");
+    
+    // Append text to circles
+    var textGroup = chartGroup.selectAll("text")
+        .data(data)
+        .enter()
+        .append("text")
+        .attr("x", d => xLinearScale(d[chosenXAxis]))
+        .attr("y", d => yLinearScale(d[chosenYAxis]))
+        .attr("class", text)
+        .attr("font-size", "10 px")
+        .attr("text-anchor", "middle")
+        .attr("fill", "white")
+        .text(d => d.abbr);
+    
 }
 )
