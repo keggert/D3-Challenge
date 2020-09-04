@@ -101,7 +101,7 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, textGroup) {
     else {
         var xLabel = "Household Income (Median)";
     }
-    if (chosenYaxis === "obesity") {
+    if (chosenYAxis === "obesity") {
         var yLabel = "Obese (%)";
     }
     else if (chosenYAxis === "healthcare") {
@@ -111,8 +111,9 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, textGroup) {
         var yLabel = "Smokes (%)";
     }
 
-    var toolTip = d3.tip()
-        .attr("class", "tooltip d3-tip")
+    var toolTip = d3
+        .tip()
+        .attr("class", "d3-tip")
         .offset([80, -60])
         .html(function(d) {
             return (`<strong>${d.abbr}</strong><br>${xLabel} ${d[chosenXAxis]}<br>${yLabel} ${d[chosenYAxis]}`);
@@ -196,7 +197,7 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
         .append("text")
         .attr("x", d => xLinearScale(d[chosenXAxis]))
         .attr("y", d => yLinearScale(d[chosenYAxis]))
-        .attr("class", text)
+        .attr("class", "text")
         .attr("font-size", "10 px")
         .attr("text-anchor", "middle")
         .attr("fill", "white")
