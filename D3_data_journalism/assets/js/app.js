@@ -48,7 +48,7 @@ function yScale(data, chosenYAxis) {
 };
 
 // Function for updating x-axis upon click on axis label
-function renderXAxis(newXScale, xAxis) {
+function renderXAxes(newXScale, xAxis) {
     var bottomAxis = d3.axisBottom(newXScale);
 
     xAxis.transition()
@@ -59,7 +59,7 @@ function renderXAxis(newXScale, xAxis) {
 };
 
 // Function for updating y-axis upon click on axis label
-function renderYaxis(newYScale, yAxis) {
+function renderYAxes(newYScale, yAxis) {
     var leftAxis = d3.axisleft(newYScale);
 
     yAxis.transition()
@@ -144,13 +144,12 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, textGroup) {
 }
 
 // Retrieve data from CSV file
-d3.csv("assets/data/data.csv").then(function (data, err) {
-    if (err) throw err;
+d3.csv("./assets/data/data.csv", function(data) {
 
     // Parse data
     data.forEach(function(data) {
         data.abbr = data.abbr;
-        data.sate = data.state;
+        data.state = data.state;
         data.poverty = +data.poverty;
         data.age = +data.age;
         data.income = +data.income;
@@ -374,5 +373,5 @@ d3.csv("assets/data/data.csv").then(function (data, err) {
                 }
             }
         })
-}
+    }
 )
